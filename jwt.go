@@ -1,8 +1,11 @@
 package jwt_go
 
-import "fmt"
+import (
+	"encoding/base64"
+	"fmt"
+)
 
-type jwt struct {
+type Jwt struct {
 	secret string //密钥
 	iss string //jwt签发者
 	sub string//jwt所面向的用户
@@ -16,8 +19,36 @@ type jwt struct {
 	recPayload []map[string]interface{}//接收到的信息
 	header string//头部信息
 }
-var jwtob jwt
-func (jwtob jwt) setSecret(st string) {
-	jwtob.secret = st
-	fmt.Println(jwtob.secret)
+
+func (jwt Jwt) SetSecret(st string) {//设置密钥
+	jwt.secret = st
+}
+func (jwt Jwt) SetIss(iss string) {//设置密钥
+	jwt.iss = iss
+}
+func (jwt Jwt) SetSub(sub string) {//设置密钥
+	jwt.sub = sub
+}
+func (jwt Jwt) SetAud(aud string) {//设置密钥
+	jwt.aud = aud
+}
+func (jwt Jwt) SetExp(exp int64) {//设置密钥
+	jwt.exp = exp
+}
+func (jwt Jwt) SetNbf(nbf int64) {//设置密钥
+	jwt.nbf = nbf
+}
+func (jwt Jwt) SetIat(iat int64) {//设置密钥
+	jwt.iat = iat
+}
+func (jwt Jwt) SetJti(jti string) {//设置密钥
+	jwt.jti = jti
+}
+func (jwt Jwt) SetPublicPd(publicPayload []map[string]interface{}) {//设置密钥
+	jwt.publicPayload = publicPayload
+}
+
+func (jwt Jwt) GenSignature() {//生成jwt字符串
+	jwt.header = base64.StdEncoding.EncodeToString([]byte("{\"typ\":\"JWT\",\"alg\":\"HS256\"}"))
+	fmt.Println(jwt.header)
 }
