@@ -17,7 +17,7 @@ type Jwt struct {
 
 	publicPayload []map[string]interface{}//公共信息
 	recPayload []map[string]interface{}//接收到的信息
-	header string//头部信息
+	//header string//头部信息
 }
 
 func (jwt Jwt) SetSecret(st string) {//设置密钥
@@ -49,6 +49,7 @@ func (jwt Jwt) SetPublicPd(publicPayload []map[string]interface{}) {//设置密�
 }
 
 func (jwt Jwt) GenSignature() {//生成jwt字符串
-	jwt.header = base64.StdEncoding.EncodeToString([]byte("{\"typ\":\"JWT\",\"alg\":\"HS256\"}"))
-	fmt.Println(jwt.header)
+	header := base64.StdEncoding.EncodeToString([]byte("{\"typ\":\"JWT\",\"alg\":\"HS256\"}"))//头部
+	payload := map[string]interface{}{"iss":jwt.iss, "sub":jwt.sub,"aud":jwt.aud,"exp":jwt.exp,"nbf":jwt.nbf,"iat":jwt.iat,"jti":jwt.jti}
+	fmt.Println(header,payload)
 }
